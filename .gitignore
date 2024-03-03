@@ -1,2 +1,13 @@
 /venv
 /prototypes
+**/__pycache__/
+*.py[cod]
+*.pyc
+*.log
+*.tex
+output.txt
+*.pdf
+*.aux
+*.out
+*.toc
+docker-compose.yml

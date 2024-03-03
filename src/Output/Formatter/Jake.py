@@ -1,4 +1,4 @@
-from Output.Formatter.Utils import l
+from src.Output.Formatter.Utils import l
 
 
 class JakesFormatter():
@@ -145,11 +145,11 @@ class JakesFormatter():
 
         for i in arr:
             if i[1]:
-                text += " $|$ \\small \\href{%s}{\\underline{%s}}" % (i[0], i[0])
+                text += " $|$ \\small \\href{%s}{\\underline{%s}}" % (l(i[0]), l(i[0]))
             elif i[2]:
-                text += " $|$ \\small \\href{mailto:%s}{\\underline{%s}}" % (i[0], i[0])
+                text += " $|$ \\small \\href{mailto:%s}{\\underline{%s}}" % (l(i[0]), l(i[0]))
             else:
-                text += " $|$ \\small %s" % i[0]
+                text += " $|$ \\small %s" % l(i[0])
         
         return text[4:] + "\n"
 
@@ -177,7 +177,11 @@ class JakesFormatter():
     
     def getProjectEntryListItemStart(self, name, dates, tools):
         text = "\\resumeProjectHeading\n"
-        text += "{\\textbf{%s} $|$ \\emph{""" % l(name)
+        text +="{\\textbf{%s}" % l(name)
+
+        if len(tools) > 0:
+            text += " $|$"
+        text += " \\emph{"""
 
         text += "%s" % ", ".join(map(l, tools))
 

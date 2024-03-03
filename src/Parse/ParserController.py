@@ -1,5 +1,5 @@
-from Parse.ImageParser import ImageParser
-from Parse.PDFParser import PDFParser
+from src.Parse.ImageParser import ImageParser
+from src.Parse.PDFParser import PDFParser
 
 
 class ParserController():
@@ -12,8 +12,8 @@ class ParserController():
         return cls.instance
 
     def parse(self, file):
-        if file.name.endswith(".pdf"):
+        if file.mimetype == "application/pdf":
             return PDFParser(file.read()).parse()
-        elif file.name.endswith(".jpg") or file.name.endswith(".jpeg") or file.name.endswith(".png"):
+        elif file.mimetype.startswith("image"):
             return ImageParser(file).parse()
         raise Exception("Unsupported file type")

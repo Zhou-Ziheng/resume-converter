@@ -1,15 +1,15 @@
 def get_or_none(json, key):
-    if key in json:
+    if key in json and json[key] is not None:
         return json[key]
     return None
 
 def get_or_empty(json, key):
-    if key in json:
+    if key in json and json[key] is not None:
         return json[key]
     return ""
 
 def get_or_empty_arr(json, key):
-    if key in json:
+    if key in json and json[key] is not None:
         return json[key]
     return []
 

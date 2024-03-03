@@ -1,5 +1,4 @@
-import pytesseract
-from Parse.ImageToText import ImageToText
+from src.Parse.ImageToText import ImageToText
 from PIL import Image
 
 class ImageParser():

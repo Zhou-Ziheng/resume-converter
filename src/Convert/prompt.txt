@@ -1,1 +1,1 @@
-Extract information from resume. infering typos and fix. Do not use Markdown. output json in the following format exactly:
+Extract information from resume. infering typos and fix. Do not use Markdown. Output json content in body with nothing extra in the following format exactly:
