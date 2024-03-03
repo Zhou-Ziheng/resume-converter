@@ -10,4 +10,3 @@ output.txt
 *.aux
 *.out
 *.toc
-docker-compose.yml
