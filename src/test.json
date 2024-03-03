@@ -1,0 +1,133 @@
+{
+    "header": {
+        "name": "Tony Zhou",
+        "number": "(365) 999-8877",
+        "email": "z472zhou@uwaterloo.ca"
+    },
+    "education": [
+        {
+            "school": "University of Waterloo",
+            "degree": "Bachelor of Computer Science",
+            "location": "Waterloo, Ontario",
+            "description": [
+                "Courses (3.9 GPA): OOP, Data Structures, Algorithms, Sequential Programs, Architecture, Operating Systems"
+            ]
+        }
+    ],
+    "experience": [
+        {
+            "company": "Super.com (formerly Snapcommerce)",
+            "title": "Software Engineer Intern",
+            "location": "Toronto, Ontario",
+            "dates": "January 2024 – Present",
+            "description": []
+        },
+        {
+            "company": "Deephaven Data Labs",
+            "title": "Software Engineer (Part-Time)",
+            "location": "Remote",
+            "dates": "September 2023 – December 2023",
+            "description": [
+                "Created services and UI to automatically allocate In-Worker Kafka Persistent Volumes in Kubernetes clusters, saving an estimated 10 hours per week",
+                "Prototyped a web scrapper to automate docstring and type generation for Deephaven UI library, allowing users to create React components in Python with type suggestions and autocompletion"
+            ]
+        },
+        {
+            "company": "Euna Solutions (formerly Bonfire Interactive)",
+            "title": "Full Stack Software Developer Intern",
+            "location": "Kitchener, Ontario",
+            "dates": "May 2023 – August 2023",
+            "description": [
+                "Engineered and deployed an AWS Lambda function to upload files to Adobe Sign using Node.js and Terraform, saving users 1 hour per contract uploaded",
+                "Reduced E-Signature microservice running time by ~30% by rewriting workflows using async uploads and webhooks",
+                "Implemented a JWT validation API route to prevent CSRF attacks for safe integration of DocuSign webhooks"
+            ]
+        },
+        {
+            "company": "Deephaven Data Labs",
+            "title": "Software Engineer (Intern -> Part-Time)",
+            "location": "Remote",
+            "dates": "May 2022 – April 2023",
+            "description": [
+                "Developed a search feature on real-time data tables using Java and React, allowing users to quickly locate entries",
+                "Accelerated team sprint velocity by ~10% by increasing TypeScript coverage from 18% to 91%",
+                "Implemented scrollbar selection ticks on data tables using React for ease of navigation during data inspections",
+                "Migrated unit tests from Enzyme to react-testing-library and Jest, aligning tests more closely with user experience",
+                "Built a real-time memory usage monitoring system to help administrators prevent server slow-down and crashes"
+            ]
+        }
+    ],
+    "skills": {
+        "languages": [
+            "TypeScript",
+            "JavaScript",
+            "C",
+            "C++",
+            "Python",
+            "Java",
+            "HTML",
+            "CSS",
+            "Racket",
+            "PostgreSQL",
+            "MySQL",
+            "Redis"
+        ],
+        "frameworks": [
+            "React.js",
+            "Hapi.js",
+            "Django",
+            "Express",
+            "MongoDB",
+            "GraphQL",
+            "Next.js",
+            "Apollo",
+            "Node.js"
+        ],
+        "tools": [
+            "Docker",
+            "AWS",
+            "Kubernetes",
+            "Linux",
+            "Git",
+            "Maven",
+            "Postman",
+            "Terraform"
+        ]
+    },
+    "projects": [
+        {
+            "name": "VPSA",
+            "tools": [],
+            "dates": "January 2024 – Present",
+            "description": [
+                "A community for VALORANT players to get certified in their skills with ~50 active users",
+                "Used Riot Single Sign-On to easily authenticate users using their Riot account via an approved production API key",
+                "Used Node.js, Express, and GraphQL to handle data exchange between Next.js frontend and MongoDB database",
+                "Automated CI/CD using GitHub Actions to build, push, and deploy Docker container automatically"
+            ]
+        },
+        {
+            "name": "Multi-Purpose Discord Bot",
+            "tools": [
+                "Java",
+                "Python",
+                "Django",
+                "PostgreSQL"
+            ],
+            "description": [
+                "Designed and built an interactive Discord bot using the Java JDA library currently used in 7 different servers",
+                "Collects and stores personalized data for users on a remote PostgreSQL database"
+            ]
+        },
+        {
+            "name": "AGE Game Engine",
+            "tools": [
+                "C++"
+            ],
+            "description": [
+                "Developed a C++ game engine for terminal based 2D ASCII games",
+                "Provided the user with a variety of OOP entities/classes to simplify game sprite creation"
+            ]
+        }
+    ]
+}

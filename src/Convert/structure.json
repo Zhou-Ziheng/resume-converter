@@ -1,0 +1,44 @@
+{
+    "header": {
+        "name": "",
+        "number": "",
+        "email": "",
+        "linkedin": "",
+        "github": ""
+    },
+    "education": [
+        {
+            "school": "",
+            "degree": "",
+            "grad_dates": "",
+            "location": "",
+            "description": []
+        }
+    ],
+    "experience": [
+        {
+            "company": "",
+            "title": "",
+            "location": "",
+            "dates": "Month Year -( Month Year/Present)",
+            "description": []
+        }
+    ],
+    "skills": {
+        "languages": [],
+        "frameworks": [],
+        "tools": []
+    },
+    "projects": [
+        {
+            "name": "",
+            "tools": [
+                "detect languages/framworks found in skills section"
+            ],
+            "dates": "",
+            "description": [
+                "return an array"
+            ]
+        }
+    ]
+}
