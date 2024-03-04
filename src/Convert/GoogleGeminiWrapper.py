@@ -37,8 +37,8 @@ class GoogleGenimiWrapper():
                     time.sleep(1)  # Wait before retrying
                 else:
                     app.logger.error("All retries failed.")
-                    return None  # Return None if all retries fail
-        return None  # Return None if all retries fail
+                    raise Exception("All retries failed.")  # Raise an exception if all retries fail
+        raise Exception("All retries failed.")  # Raise an exception if all retries fail
 
     def format_text(self, text, app):
         key =  os.environ.get("GEMINI_API_KEY")
@@ -59,8 +59,6 @@ class GoogleGenimiWrapper():
         }
 
         parsed_data = self.process_request(URL, key, headers, data, app)
-        if parsed_data is None:
-            raise ValueError("Error fetching and parsing from Gemini")
         
         return parsed_data
     
