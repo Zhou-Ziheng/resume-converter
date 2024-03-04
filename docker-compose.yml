@@ -1,12 +1,11 @@
 version: '3.8'
 
 services:
-  web:
+  backend:
     build: .
     ports:
       - "5000:5000"
-    volumes:
-      - .:/app
+    container_name: resume-converter
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0

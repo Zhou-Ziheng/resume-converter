@@ -38,5 +38,5 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.VPSA_PASSWORD }}
+          password: ${{ secrets.PASSWORD }}
           script: echo ${{ env.RELEASE_VERSION }} | . ./deploy.sh
