@@ -26,8 +26,8 @@ jobs:
       
       - name: tag images
         run: |
-          docker tag resume-converter sparkyfnay/resume-converter:${{ env.RELEASE_VERSION }}
-          docker tag resume-converter sparkyfnay/resume-converter:latest
+          docker tag resume-converter_backend sparkyfnay/resume-converter:${{ env.RELEASE_VERSION }}
+          docker tag resume-converter_backend sparkyfnay/resume-converter:latest
 
       - name: push container
         run: |
