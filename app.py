@@ -7,7 +7,7 @@ from src.convert import convert_resume_handler
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000/", "https://resume-converter.vercel.app/"])
+CORS(app)
 
 # Define a file handler to log to a file
 file_handler = logging.FileHandler('app.log')
