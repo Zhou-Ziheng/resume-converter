@@ -3,7 +3,6 @@
 import json
 import os
 import time
-from flask import app
 import requests
 
 
@@ -20,7 +19,7 @@ class GoogleGenimiWrapper():
             cls.gemini_client.structure = open("src/Convert/structure.json", "r").read()
         return cls.gemini_client
     
-    def process_request(self, URL, key, headers, data):
+    def process_request(self, URL, key, headers, data, app):
         retries = 2  # Number of retries
         for attempt in range(retries):
             try:
@@ -28,6 +27,7 @@ class GoogleGenimiWrapper():
                 response = requests.post(URL + key, headers=headers, json=data)
                 response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
                 data = response.json()['candidates'][0]['content']['parts'][0]['text']
+                print(data)
                 parsed_data = json.loads(data)
                 return parsed_data  # Return parsed data if successful
             except (requests.RequestException, KeyError, IndexError, json.JSONDecodeError) as e:
@@ -40,7 +40,7 @@ class GoogleGenimiWrapper():
                     return None  # Return None if all retries fail
         return None  # Return None if all retries fail
 
-    def format_text(self, text):
+    def format_text(self, text, app):
         key =  os.environ.get("GEMINI_API_KEY")
         data = {
         "contents": [
@@ -58,7 +58,7 @@ class GoogleGenimiWrapper():
             "Content-Type": "application/json"
         }
 
-        parsed_data = self.process_request(URL, key, headers, data)
+        parsed_data = self.process_request(URL, key, headers, data, app)
         if parsed_data is None:
             raise ValueError("Error fetching and parsing from Gemini")
         

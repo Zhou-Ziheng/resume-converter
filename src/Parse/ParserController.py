@@ -16,4 +16,4 @@ class ParserController():
             return PDFParser(file.read()).parse()
         elif file.mimetype.startswith("image"):
             return ImageParser(file).parse()
-        raise Exception("Unsupported file type")
+        raise Exception("Unsupported file type", file.mimetype)

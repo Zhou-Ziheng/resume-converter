@@ -39,7 +39,7 @@ def convert_resume():
     
     file = request.files['file']
     print(file)
-    tex, pdf = convert_resume_handler(file)
+    tex, pdf = convert_resume_handler(file, app)
     tex_buffer = io.BytesIO(tex)
     pdf_buffer = io.BytesIO(pdf)
 
