@@ -1,3 +1,5 @@
+import logging
+
 from src.Convert.GoogleGeminiWrapper import GoogleGenimiWrapper
 from src.Output.Resume import Resume
 from src.Output.Formatter.Jake import JakesFormatter
@@ -8,8 +10,8 @@ def get_text(file):
     parsed = ParserController.get_one().parse(file)
     return parsed
 
-def format_text_to_json(text, app):
-    return GoogleGenimiWrapper.get_one().format_text(text, app)
+def format_text_to_json(text):
+    return GoogleGenimiWrapper.get_one().format_text(text)
 
 def json_to_tex(json):
     return Resume(json, JakesFormatter()).output()
@@ -22,9 +24,9 @@ def log_tex(tex):
     with open('output.tex', 'w') as f:
         f.write(tex)
 
-def convert_resume_handler(file, app):
+def convert_resume_handler(file):
     text = get_text(file)
-    json = format_text_to_json(text, app)
+    json = format_text_to_json(text)
     tex = json_to_tex(json)
     log_tex(tex) 
 

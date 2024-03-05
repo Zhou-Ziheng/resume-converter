@@ -1,5 +1,6 @@
 import io
 import logging
+import sys
 import zipfile
 from flask import Flask, request, send_file
 import requests
@@ -9,37 +10,42 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 # Define a file handler to log to a file
 file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.INFO)
 
-# Define a stream handler to log to console
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.DEBUG)
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setLevel(logging.INFO)
 
-# Create a formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(formatter)
 stream_handler.setFormatter(formatter)
 
-# Add the handlers to the app logger
-app.logger.addHandler(file_handler)
-app.logger.addHandler(stream_handler)
+# Add both handlers to the logger
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
+
 @app.route('/v1/convert', methods=['POST'])
 def convert_resume():
+
     # Check if a file was uploaded in the request
     if 'file' not in request.files:
-        app.logger.error('No file part in the request')
+        logging.error('No file part in the request')
         return 'No file part in the request', 400
     
     file = request.files['file']
-    print(file)
-    tex, pdf = convert_resume_handler(file, app)
+    logging.info(f'File uploaded: {file}')
+    tex, pdf = convert_resume_handler(file)
+    logging.info(f'File created')
     tex_buffer = io.BytesIO(tex)
     pdf_buffer = io.BytesIO(pdf)
 

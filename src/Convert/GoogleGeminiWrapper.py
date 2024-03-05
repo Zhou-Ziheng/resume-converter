@@ -1,6 +1,7 @@
 
 
 import json
+import logging
 import os
 import time
 import requests
@@ -19,7 +20,7 @@ class GoogleGenimiWrapper():
             cls.gemini_client.structure = open("src/Convert/structure.json", "r").read()
         return cls.gemini_client
     
-    def process_request(self, URL, key, headers, data, app):
+    def process_request(self, URL, key, headers, data):
         retries = 2  # Number of retries
         for attempt in range(retries):
             try:
@@ -27,20 +28,23 @@ class GoogleGenimiWrapper():
                 response = requests.post(URL + key, headers=headers, json=data)
                 response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
                 data = response.json()['candidates'][0]['content']['parts'][0]['text']
-                print(data)
                 parsed_data = json.loads(data)
                 return parsed_data  # Return parsed data if successful
-            except (requests.RequestException, KeyError, IndexError, json.JSONDecodeError) as e:
-                app.logger.error(f"Error processing request: {e}")
+            except (requests.RequestException, KeyError, IndexError) as e:
+                logging.error(f"Error processing request: {e}")
                 if attempt < retries - 1:
-                    app.logger.info("Retrying...")
-                    time.sleep(1)  # Wait before retrying
-                else:
-                    app.logger.error("All retries failed.")
-                    raise Exception("All retries failed.")  # Raise an exception if all retries fail
+                    logging.info("Retrying...")
+                    time.sleep(10)  # Wait before retrying
+            except json.JSONDecodeError as e:
+                logging.error(f"Error decoding JSON: {e} {data}")
+                if attempt < retries - 1:
+                    logging.info("Retrying...")
+                    time.sleep(10)
+
+        logging.error("All retries failed.")
         raise Exception("All retries failed.")  # Raise an exception if all retries fail
 
-    def format_text(self, text, app):
+    def format_text(self, text):
         key =  os.environ.get("GEMINI_API_KEY")
         data = {
         "contents": [
@@ -58,7 +62,7 @@ class GoogleGenimiWrapper():
             "Content-Type": "application/json"
         }
 
-        parsed_data = self.process_request(URL, key, headers, data, app)
+        parsed_data = self.process_request(URL, key, headers, data)
         
         return parsed_data
     

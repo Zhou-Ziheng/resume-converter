@@ -1,3 +1,6 @@
+import logging
+
+
 def get_or_none(json, key):
     if key in json and json[key] is not None:
         return json[key]
@@ -114,21 +117,29 @@ class Header:
 class Resume:
     def __init__(self, 
                  json, formatter):
-        self.header = Header(json['header'], formatter)
-        self.education = Education(json['education'], formatter)
-        self.experience = Experience(json['experience'], formatter)
-        self.projects = Project(json['projects'], formatter)
-        self.skills = Skills(json['skills'], formatter)
-        self.formatter = formatter
+        try:
+            self.header = Header(json['header'], formatter)
+            self.education = Education(json['education'], formatter)
+            self.experience = Experience(json['experience'], formatter)
+            self.projects = Project(json['projects'], formatter)
+            self.skills = Skills(json['skills'], formatter)
+            self.formatter = formatter
+        except KeyError as e:
+            logging.error(f"Error parsing resume: {e} {json}")
+            raise Exception(f"Error parsing resume: {e}")
 
     def output(self):
-        output = self.formatter.getSetup()
-        output += self.header.output()
-        output += self.education.output()
-        output += self.experience.output()
-        output += self.projects.output()
-        output += self.skills.output()
-        output += self.formatter.getCleanup()
+        try:
+            output = self.formatter.getSetup()
+            output += self.header.output()
+            output += self.education.output()
+            output += self.experience.output()
+            output += self.projects.output()
+            output += self.skills.output()
+            output += self.formatter.getCleanup()
+        except Exception as e:
+            logging.error(f"Error formatting resume: {e}")
+            raise Exception(f"Error formatting resume: {e}")
 
         return output
 
