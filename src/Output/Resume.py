@@ -85,7 +85,7 @@ class Education:
 
 class Header:
     def __init__(self, json, formatter):
-        self.name = get_or_none(json, 'name')
+        self.name = get_or_empty(json, 'name')
         self.number = get_or_none(json, 'number')
         self.email = get_or_none(json, 'email')
         self.address = get_or_none(json, 'address')

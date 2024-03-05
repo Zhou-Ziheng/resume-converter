@@ -5,8 +5,10 @@
 *.pyc
 *.log
 *.tex
+test.py
 output.txt
 *.pdf
 *.aux
 *.out
 *.toc
+docker-compose.yml
