@@ -17,18 +17,18 @@ def json_to_tex(json):
     return Resume(json, JakesFormatter()).output()
 
 def compile_tex(tex_content):
-    pdf = build_pdf(tex_content, builder='pdflatex')
+    try:
+        pdf = build_pdf(tex_content, builder='pdflatex')
+    except Exception as e:
+        logging.error(f"Error compiling tex: {e} {tex_content}")
+        raise e
+    
     return bytes(pdf)
-
-def log_tex(tex):
-    with open('output.tex', 'w') as f:
-        f.write(tex)
 
 def convert_resume_handler(file):
     text = get_text(file)
     json = format_text_to_json(text)
     tex = json_to_tex(json)
-    log_tex(tex) 
 
     pdf = compile_tex(tex)
 

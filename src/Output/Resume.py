@@ -24,6 +24,8 @@ class Skills:
         self.formatter = formatter
 
     def output(self):
+        if self.languages == [] and self.frameworks == [] and self.tools == []:
+            return ""
         output = self.formatter.getSectionStart("Skills")
         output += self.formatter.getSkills(self.languages, self.frameworks, self.tools)
         return output
@@ -34,6 +36,8 @@ class Project:
         self.formatter = formatter
 
     def output(self):
+        if self.projects is None or self.projects == []:
+            return ""
         output = self.formatter.getSectionStart("Projects")
         output += self.formatter.entryListStart()
         for item in self.projects:
@@ -52,6 +56,8 @@ class Experience:
         self.formatter = formatter
     
     def output(self):
+        if self.experience is None or self.experience == []:
+            return ""
         output = self.formatter.getSectionStart("Experience")
         output += self.formatter.entryListStart()
         for item in self.experience:
@@ -71,6 +77,8 @@ class Education:
         self.formatter = formatter
 
     def output(self):
+        if self.education is None or self.education == []:
+            return ""
         output = self.formatter.getSectionStart("Education")
         output+= self.formatter.entryListStart()
         
