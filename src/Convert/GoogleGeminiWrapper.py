@@ -28,7 +28,7 @@ class GoogleGenimiWrapper():
                 response = requests.post(URL + key, headers=headers, json=data)
                 response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
                 data = response.json()['candidates'][0]['content']['parts'][0]['text']
-                parsed_data = json.loads(data)
+                parsed_data = json.loads(data, strict=False)
                 return parsed_data  # Return parsed data if successful
             except (requests.RequestException, KeyError, IndexError) as e:
                 logging.error(f"Error processing request: {e}")
@@ -45,7 +45,7 @@ class GoogleGenimiWrapper():
         raise Exception("All retries failed.")  # Raise an exception if all retries fail
 
     def format_text(self, text):
-        key =  os.environ.get("GEMINI_API_KEY")
+        key = os.environ.get("GEMINI_API_KEY")
         data = {
         "contents": [
             {

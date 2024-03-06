@@ -27,7 +27,7 @@ class PDFParser():
         with fitz.open(stream=self.pdf, filetype="pdf") as doc:
             for page_number in range(len(doc)):
                 page = doc.load_page(page_number)
-                pix = page.get_pixmap(matrix=fitz.Matrix(1, 1).prescale(dpi, dpi))
+                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
                 img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
                 text += ImageToText.get_text(img)
         return text

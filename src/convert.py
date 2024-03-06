@@ -25,11 +25,14 @@ def compile_tex(tex_content):
     
     return bytes(pdf)
 
+def logTex(tex):
+    with open('output.tex', 'w') as f:
+        f.write(tex)
+
 def convert_resume_handler(file):
     text = get_text(file)
     json = format_text_to_json(text)
     tex = json_to_tex(json)
-
     pdf = compile_tex(tex)
 
     return tex.encode(), pdf
