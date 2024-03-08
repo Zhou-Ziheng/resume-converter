@@ -21,7 +21,7 @@ class GoogleGenimiWrapper():
         return cls.gemini_client
     
     def process_request(self, URL, key, headers, data):
-        retries = 2  # Number of retries
+        retries = 3  # Number of retries
         for attempt in range(retries):
             try:
                 # Send POST request
@@ -30,11 +30,17 @@ class GoogleGenimiWrapper():
                 data = response.json()['candidates'][0]['content']['parts'][0]['text']
                 parsed_data = json.loads(data, strict=False)
                 return parsed_data  # Return parsed data if successful
-            except (requests.RequestException, KeyError, IndexError) as e:
+            except (requests.RequestException) as e:
+                logging.error(f"Error processing request: {e}")
+                logging.error(f"Response: {response.json()['error']}")
+                if attempt < retries - 1:
+                    logging.info("Retrying...")
+                    time.sleep(5)  # Wait before retrying
+            except (KeyError, IndexError) as e:
                 logging.error(f"Error processing request: {e}")
                 if attempt < retries - 1:
                     logging.info("Retrying...")
-                    time.sleep(10)  # Wait before retrying
+                    time.sleep(5)  # Wait before retrying
             except json.JSONDecodeError as e:
                 logging.error(f"Error decoding JSON: {e} {data}")
                 if attempt < retries - 1:
@@ -45,7 +51,7 @@ class GoogleGenimiWrapper():
         raise Exception("All retries failed.")  # Raise an exception if all retries fail
 
     def format_text(self, text):
-        key = os.environ.get("GEMINI_API_KEY")
+        key = os.environ.get('GEMINI_API_KEY')
         data = {
         "contents": [
             {
