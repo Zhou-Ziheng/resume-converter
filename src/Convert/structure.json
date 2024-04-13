@@ -39,7 +39,10 @@
   "activities": [
     {
       "title": "",
-      "dates": ""
+      "dates": "Month Year - (Month Year/Present)",
+      "location": "",
+      "organization": "",
+      "description": []
     }
   ],
   "skills": {

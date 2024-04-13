@@ -104,6 +104,27 @@ class Project:
         output += self.formatter.entryListEnd()
         return output
 
+class Activities:
+    def __init__(self, activities, formatter):
+        self.activities = activities
+        self.formatter = formatter
+    
+    def output(self):
+        if self.activities is None or self.activities == []:
+            return ""
+        output = self.formatter.getSectionStart("Activities")
+        output += self.formatter.entryListStart()
+        for item in self.activities:
+            title = get_or_empty(item, 'title')
+            organization = get_or_empty(item, 'organization')
+            location = get_or_empty(item, 'location')
+            dates = get_or_empty(item, 'dates')
+            output += self.formatter.entryListItem(title, dates, organization, location)
+            if 'description' in item:
+                output += self.formatter.entryListDescription(item['description'])
+        output += self.formatter.entryListEnd()
+        return output
+    
 class Experience:
     def __init__(self, exprience, formatter):
         self.experience = exprience
@@ -189,7 +210,8 @@ class Resume:
                 self.achievements = Achievements(json['awards-achievements'], formatter)
             if 'certificates' in json:
                 self.certifications = Certifications(json.get('certificates'), formatter)
-                
+            if 'activities' in json:
+                self.activities = Activities(json.get('activities'), formatter)
             self.skills = Skills(json.get('skills'), formatter)
             self.formatter = formatter
         except KeyError as e:
@@ -202,6 +224,8 @@ class Resume:
             output += self.header.output()
             output += self.education.output()
             output += self.experience.output()
+            if hasattr(self, 'activities'):
+                output += self.activities.output()
             output += self.projects.output()
             if hasattr(self, 'achievements'):
                 output += self.achievements.output()
