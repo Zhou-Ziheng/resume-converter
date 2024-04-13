@@ -1,5 +1,6 @@
+from abc import abstractmethod
 import logging
-
+from typing import List, Tuple
 
 def get_or_none(json, key):
     if key in json and json[key] is not None:
@@ -15,6 +16,59 @@ def get_or_empty_arr(json, key):
     if key in json and json[key] is not None:
         return json[key]
     return []
+
+class SingleRowList():
+    @abstractmethod
+    def getContent(self) -> List[Tuple[str, str]]:
+        pass
+    
+    @abstractmethod
+    def getHeader(self) -> str:
+        pass
+
+    def output(self):
+        header = self.getHeader()
+        content = self.getContent()
+        if not content or content==[]:
+            return ""
+        return self.formatter.getResumeSingleSubheadingsSection(header, content)
+        
+class Achievements(SingleRowList):
+    def __init__(self, achievements, formatter):
+        self.achievements = achievements
+        self.formatter = formatter
+
+    def getContent(self) -> List[Tuple[str, str]]:
+        content = []
+        for item in self.achievements:
+            title = get_or_empty(item, 'title')
+            if (title == ""):
+                continue
+            date = get_or_empty(item, 'dates')
+            content.append((title, date))
+        return content
+
+    def getHeader(self) -> str:
+        return "Achievements"
+
+class Certifications(SingleRowList):
+    def __init__(self, certifications, formatter):
+        self.certifications = certifications
+        self.formatter = formatter
+
+    def getContent(self) -> List[Tuple[str, str]]:
+        content = []
+        for item in self.certifications:
+            title = get_or_empty(item, 'title')
+            if (title == ""):
+                continue
+            date = get_or_empty(item, 'dates')
+            content.append((title, date))
+        return content
+
+    def getHeader(self) -> str:
+        return "Certifications"
+
 
 class Skills:
     def __init__(self, skills, formatter):
@@ -125,12 +179,18 @@ class Header:
 class Resume:
     def __init__(self, 
                  json, formatter):
+        self.json = json
         try:
             self.header = Header(json['header'], formatter)
             self.education = Education(json['education'], formatter)
             self.experience = Experience(json['experience'], formatter)
             self.projects = Project(json['projects'], formatter)
-            self.skills = Skills(json['skills'], formatter)
+            if 'awards-achievements' in json:
+                self.achievements = Achievements(json['awards-achievements'], formatter)
+            if 'certificates' in json:
+                self.certifications = Certifications(json.get('certificates'), formatter)
+                
+            self.skills = Skills(json.get('skills'), formatter)
             self.formatter = formatter
         except KeyError as e:
             logging.error(f"Error parsing resume: {e} {json}")
@@ -143,6 +203,10 @@ class Resume:
             output += self.education.output()
             output += self.experience.output()
             output += self.projects.output()
+            if hasattr(self, 'achievements'):
+                output += self.achievements.output()
+            if hasattr(self, 'certifications'):
+                output += self.certifications.output()
             output += self.skills.output()
             output += self.formatter.getCleanup()
         except Exception as e:

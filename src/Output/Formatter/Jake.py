@@ -1,3 +1,4 @@
+from typing import List, Tuple
 from src.Output.Formatter.Utils import l
 
 
@@ -82,6 +83,14 @@ class JakesFormatter():
     \\end{tabular*}\\vspace{-7pt}
 }
 
+
+\\newcommand{\\resumeSingleSubheading}[2]{
+  \\vspace{-2pt}\item
+    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\extracolsep{\\fill}}r}
+      \\textbf{#1} & #2 \\\\
+    \\end{tabular*}\\vspace{-7pt}
+}
+
 \\newcommand{\\resumeSubSubheading}[2]{
     \\item
     \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
@@ -99,6 +108,11 @@ class JakesFormatter():
 \\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-4pt}}
 
 \\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
+
+\\newcommand{\\resumeSingleSubHeadingListStart}{
+\\begin{itemize}[leftmargin=0.15in, label={}]
+\\setlength\\itemsep{-10pt} 
+}
 
 \\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0.15in, label={}]}
 \\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
@@ -125,6 +139,7 @@ class JakesFormatter():
         return """\\textbf{\\Huge \\scshape %s} \\\\ \\vspace{1pt}
     """ % l(name)
 
+         
     def getSubHeader(self, dict):
         arr=[]
         if 'number' in dict:
@@ -155,6 +170,10 @@ class JakesFormatter():
 
     def getSectionStart(self, section):
         return "\\section{%s}\n" % l(section)
+    
+
+    def singleEntryListStart(self):
+        return "\\resumeSingleSubHeadingListStart\n"
 
     def entryListStart(self):
         return "\\resumeSubHeadingListStart\n"
@@ -206,6 +225,21 @@ class JakesFormatter():
         text += """}}
         \\end{itemize}
         """
+        return text
+    
+
+    def getResumeSingleSubheadings(self, items: List[Tuple[str, str]]):
+        text = ""
+        for item in items:
+            text += "\\resumeSingleSubheading{%s}{%s}\n" % (l(item[0]), l(item[1]))
+        return text
+    
+    
+    def getResumeSingleSubheadingsSection(self, section, items):
+        text = self.getSectionStart(section)
+        text += self.singleEntryListStart()
+        text += self.getResumeSingleSubheadings(items)
+        text += self.entryListEnd()
         return text
 
 

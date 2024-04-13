@@ -11,7 +11,6 @@ class WordParser():
         text = ""
         for paragraph in self.doc.paragraphs:
             text += paragraph.text + "\n"
-        print(text)
         return text
 
 
