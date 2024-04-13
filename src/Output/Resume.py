@@ -117,7 +117,7 @@ class Activities:
         for item in self.activities:
             title = get_or_empty(item, 'title')
             organization = get_or_empty(item, 'organization')
-            location = get_or_empty(item, 'location')
+            location = get_or_empty(item, 'city')
             dates = get_or_empty(item, 'dates')
             output += self.formatter.entryListItem(title, dates, organization, location)
             if 'description' in item:
@@ -201,6 +201,7 @@ class Resume:
     def __init__(self, 
                  json, formatter):
         self.json = json
+        # print(json)
         try:
             self.header = Header(json['header'], formatter)
             self.education = Education(json['education'], formatter)
