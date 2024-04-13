@@ -87,7 +87,7 @@ class JakesFormatter():
 \\newcommand{\\resumeSingleSubheading}[2]{
   \\vspace{-2pt}\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\extracolsep{\\fill}}r}
-      \\textbf{#1} & #2 \\\\
+      #1 & #2 \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
