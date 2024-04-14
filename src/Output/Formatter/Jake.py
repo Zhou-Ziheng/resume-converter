@@ -26,7 +26,9 @@ class JakesFormatter():
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
 \\input{glyphtounicode}
-
+\\makeatletter
+\\def\\UTFviii@undefined@err#1{}
+\\makeatother
 
 %----------FONT OPTIONS----------
 % sans-serif
