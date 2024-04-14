@@ -5,10 +5,12 @@ from src.Output.Resume import Resume
 from src.Output.Formatter.Jake import JakesFormatter
 from src.Parse.ParserController import ParserController;
 from latex import build_pdf
+import re
 
 def get_text(file):
     parsed = ParserController.get_one().parse(file)
-    return parsed
+    filtered = re.sub(r'[^\x00-\x7f]',r'', parsed)
+    return filtered
 
 def format_text_to_json(text):
     return GoogleGenimiWrapper.get_one().format_text(text)
