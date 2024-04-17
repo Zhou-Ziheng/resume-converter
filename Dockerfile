@@ -42,4 +42,4 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 
 # Run app.py when the container launches
-CMD ["gunicorn", "--timeout", "1000", "--bind", "0.0.0.0:5000", "-w", "2", "app:app"]
+CMD ["ddtrace-run", "gunicorn", "--timeout", "1000", "--bind", "0.0.0.0:5000", "-w", "2", "app:app"]

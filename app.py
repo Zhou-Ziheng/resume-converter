@@ -3,7 +3,6 @@ import logging
 import sys
 import zipfile
 from flask import Flask, request, send_file
-import requests
 from src.convert import convert_resume_handler
 from flask_cors import CORS
 
