@@ -23,6 +23,7 @@ class JakesFormatter():
 \\usepackage{enumitem}
 \\usepackage[hidelinks]{hyperref}
 \\usepackage{fancyhdr}
+\\usepackage{fontawesome}
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
 \\input{glyphtounicode}
@@ -144,6 +145,7 @@ class JakesFormatter():
          
     def getSubHeader(self, dict):
         arr=[]
+        #(value, isLink, isEmail, linkName)
         if 'number' in dict:
             arr.append((dict['number'], False, False))
 
@@ -151,10 +153,10 @@ class JakesFormatter():
             arr.append((dict['email'], False, True))
         
         if 'linkedin' in dict:
-            arr.append((dict['linkedin'], True, False))
+            arr.append((dict['linkedin'], True, False, "\\faicon{linkedin} LinkedIn"))
         
         if 'github' in dict:
-            arr.append((dict['github'], True, False))
+            arr.append((dict['github'], True, False, "\\faicon{github} Github"))
 
         if len(arr) == 0:
             return ""
@@ -162,12 +164,11 @@ class JakesFormatter():
 
         for i in arr:
             if i[1]:
-                text += " $|$ \\small \\href{%s}{\\underline{%s}}" % (l(i[0]), l(i[0]))
+                text += " $|$ \\small \\href{%s}{%s}" % (l(i[0]), l(i[3]))
             elif i[2]:
                 text += " $|$ \\small \\href{mailto:%s}{\\underline{%s}}" % (l(i[0]), l(i[0]))
             else:
                 text += " $|$ \\small %s" % l(i[0])
-        
         return text[4:] + "\n"
 
     def getSectionStart(self, section):

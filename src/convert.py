@@ -16,6 +16,7 @@ def format_text_to_json(text):
     return GoogleGenimiWrapper.get_one().format_text(text)
 
 def json_to_tex(json):
+    logging.debug(f"json: {json}")
     return Resume(json, JakesFormatter()).output()
 
 def compile_tex(tex_content):
