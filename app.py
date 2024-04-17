@@ -36,7 +36,7 @@ def hello_world():
 
 @app.route('/v1/convert', methods=['POST'])
 def convert_resume():
-
+    logging.info(f"Request received: {request.method} {request.path}")
     # Check if a file was uploaded in the request
     if 'file' not in request.files:
         logging.error('No file part in the request')
