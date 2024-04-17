@@ -9,4 +9,4 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      - GEMINI_API_KEY=AIzaSyBl75KHC7mPfeFAFgKnPmMCl_SZu3s0Fwo
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
