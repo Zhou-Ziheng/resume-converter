@@ -1,10 +1,13 @@
 import io
 import logging
+import os
 import sys
 import zipfile
 from flask import Flask, request, send_file
 from src.convert import convert_resume_handler
 from flask_cors import CORS
+from ddtrace import tracer
+
 
 app = Flask(__name__)
 CORS(app)
@@ -19,7 +22,16 @@ file_handler.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# if prod
+if (os.getenv('ENV') == 'prod'):
+    FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
+          '[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] '
+          '- %(message)s')
+else:
+    FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    tracer.enabled = False
+
+formatter = logging.Formatter(FORMAT)
 file_handler.setFormatter(formatter)
 stream_handler.setFormatter(formatter)
 
@@ -34,6 +46,7 @@ def hello_world():
 
 
 @app.route('/v1/convert', methods=['POST'])
+@tracer.wrap()
 def convert_resume():
     logging.info(f"Request received: {request.method} {request.path}")
     # Check if a file was uploaded in the request
