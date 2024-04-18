@@ -34,17 +34,17 @@ class GoogleGenimiWrapper():
                 logging.error(f"Error processing request: {e}")
                 logging.error(f"Response: {response.json()['error']}")
                 if attempt < retries - 1:
-                    logging.info("Retrying...")
+                    logging.warning("Retrying...")
                     time.sleep(5)  # Wait before retrying
             except (KeyError, IndexError) as e:
                 logging.error(f"Error processing request: {e}")
                 if attempt < retries - 1:
-                    logging.info("Retrying...")
+                    logging.warning("Retrying...")
                     time.sleep(5)  # Wait before retrying
             except json.JSONDecodeError as e:
                 logging.error(f"Error decoding JSON: {e} {data}")
                 if attempt < retries - 1:
-                    logging.info("Retrying...")
+                    logging.warning("Retrying...")
                     time.sleep(10)
 
         logging.error("All retries failed.")

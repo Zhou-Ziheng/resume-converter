@@ -1,2 +1,2 @@
 def l(text):
-    return text.replace("%", "\%").replace("#", "\#").replace("\t", "").replace('–', '-').replace("&", "\&").replace("$", "\$").replace('->', "$\\to$").replace('~', '$\sim$').replace('’', "'").replace('•', "").encode('utf-8','ignore').decode("utf-8")
+    return text.replace("%", "\%").replace("#", "\#").replace("_", "\_").replace("\t", "").replace('–', '-').replace("&", "\&").replace("$", "\$").replace('->', "$\\to$").replace('~', '$\sim$').replace('’', "'").replace('•', "").encode('utf-8','ignore').decode("utf-8")
