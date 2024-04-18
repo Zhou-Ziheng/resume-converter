@@ -6,7 +6,7 @@ import zipfile
 from flask import Flask, request, send_file
 from src.convert import convert_resume_handler
 from flask_cors import CORS
-from ddtrace import tracer
+import ddtrace
 
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ if (os.getenv('ENV') == 'prod'):
           '- %(message)s')
 else:
     FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    tracer.enabled = False
+    ddtrace.tracer.enabled = False
 
 formatter = logging.Formatter(FORMAT)
 file_handler.setFormatter(formatter)
@@ -46,7 +46,7 @@ def hello_world():
 
 
 @app.route('/v1/convert', methods=['POST'])
-@tracer.wrap()
+@ddtrace.tracer.wrap()
 def convert_resume():
     logging.info(f"Request received: {request.method} {request.path}")
     # Check if a file was uploaded in the request
