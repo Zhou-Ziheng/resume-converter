@@ -61,6 +61,7 @@ def convert_resume():
 
     tex, pdf = convert_resume_handler(file, request.form.get("style"))
     logging.info(f"File created")
+
     tex_buffer = io.BytesIO(tex)
     pdf_buffer = io.BytesIO(pdf)
 

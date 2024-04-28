@@ -26,7 +26,7 @@ def format_text_to_json(text):
 @tracer.wrap()
 def json_to_tex(jsonData, style):
     logging.debug(f"json: {jsonData}")
-    print(style)
+    logging.debug(f"style: {style}")
     if style is None:
         style = ResumeStyle()
     else:

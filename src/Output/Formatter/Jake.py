@@ -17,8 +17,9 @@ class JakesFormatter:
 % Based off of: https://github.com/sb2nov/resume
 % License : MIT
 %------------------------
-
-\\documentclass[letterpaper,11pt]{article}
+"""
+        setup += "\\documentclass[letterpaper,%spt]{article}" % self.styles.font_size
+        setup += """
 \\usepackage[T1]{fontenc}
 \\usepackage{lmodern}
 \\usepackage{latexsym}

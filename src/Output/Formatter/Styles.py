@@ -12,7 +12,6 @@ class Font(Enum):
 
 class Color:
     def __init__(self, color: str = "#000000"):
-        print(color)
         if not isinstance(color, str) or not re.match(
             r"^#(?:[0-9a-fA-F]{3}){1,2}$", color
         ):
@@ -43,7 +42,7 @@ class ResumeStyle:
     def __init__(
         self,
         font: Font = Font.DEFAULT,
-        font_size: int = 12,
+        font_size: int = 11,
         header_color: str = "#000000",
         subheader_color: str = "#000000",
         section_header_color: str = "#000000",
@@ -57,8 +56,8 @@ class ResumeStyle:
         bullet_color: str = "#000000",
         single_entry_color: str = "#000000",
     ):
-        self.font = font
-        self.font_size = font_size
+        self.set_font(font)
+        self.set_font_size(font_size)
         self.header_color = Color(header_color)
         self.subheader_color = Color(subheader_color)
         self.section_header_color = Color(section_header_color)
@@ -74,25 +73,16 @@ class ResumeStyle:
 
     def set_font(self, font: Font):
         if not isinstance(font, Font):
-            raise ValueError("Font must be a member of the Font enum")
+            logging.warning(
+                f"Invalid font {font}, defaulting to {Font.DEFAULT}. Valid fonts are {Font}"
+            )
+            font = Font.DEFAULT
         self.font = font
 
     def set_font_size(self, font_size: int):
         if not isinstance(font_size, int) or font_size not in self.VALID_FONT_SIZES:
-            raise ValueError("Font size must be a positive integer")
+            logging.warning(
+                f"Invalid font size {font_size}, defaulting to 11. Valid font sizes are {self.VALID_FONT_SIZES}"
+            )
+            font_size = 11
         self.font_size = font_size
-
-    def set_header_color(self, color: Color):
-        if not isinstance(color, Color):
-            raise ValueError("Header color must be an instance of the Color class")
-        self.header_color = color
-
-    def set_body_color(self, color: Color):
-        if not isinstance(color, Color):
-            raise ValueError("Body color must be an instance of the Color class")
-        self.body_color = color
-
-    def set_section_color(self, color: Color):
-        if not isinstance(color, Color):
-            raise ValueError("Section color must be an instance of the Color class")
-        self.section_color = color
