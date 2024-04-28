@@ -11,3 +11,5 @@ output.txt
 *.aux
 *.out
 *.toc
+output.json
+output.tex
