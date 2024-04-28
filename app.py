@@ -16,19 +16,21 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Define a file handler to log to a file
-file_handler = logging.FileHandler('app.log')
+file_handler = logging.FileHandler("app.log")
 file_handler.setLevel(logging.INFO)
 
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setLevel(logging.INFO)
 
 # if prod
-if (os.getenv('ENV') == 'prod'):
-    FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
-          '[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] '
-          '- %(message)s')
+if os.getenv("ENV") == "prod":
+    FORMAT = (
+        "%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] "
+        "[dd.service=%(dd.service)s dd.env=%(dd.env)s dd.version=%(dd.version)s dd.trace_id=%(dd.trace_id)s dd.span_id=%(dd.span_id)s] "
+        "- %(message)s"
+    )
 else:
-    FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     ddtrace.tracer.enabled = False
 
 formatter = logging.Formatter(FORMAT)
@@ -40,37 +42,44 @@ logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
 
-@app.route('/')
+@app.route("/")
 def hello_world():
-    return 'Hello, World!'
+    return "Hello, World!"
 
 
-@app.route('/v1/convert', methods=['POST'])
+@app.route("/v1/convert", methods=["POST"])
 @ddtrace.tracer.wrap()
 def convert_resume():
     logging.info(f"Request received: {request.method} {request.path}")
     # Check if a file was uploaded in the request
-    if 'file' not in request.files:
-        logging.error('No file part in the request')
-        return 'No file part in the request', 400
-    
-    file = request.files['file']
-    logging.info(f'File uploaded: {file}')
-    tex, pdf = convert_resume_handler(file)
-    logging.info(f'File created')
+    if "file" not in request.files:
+        logging.error("No file part in the request")
+        return "No file part in the request", 400
+
+    file = request.files["file"]
+    logging.info(f"File uploaded: {file}")
+
+    tex, pdf = convert_resume_handler(file, request.form.get("style"))
+    logging.info(f"File created")
     tex_buffer = io.BytesIO(tex)
     pdf_buffer = io.BytesIO(pdf)
 
     zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zipf:
         # Add the .tex file to the zip archive
-        zipf.writestr('resume.tex', tex_buffer.getvalue())
+        zipf.writestr("resume.tex", tex_buffer.getvalue())
         # Add the .pdf file to the zip archive
-        zipf.writestr('resume.pdf', pdf_buffer.getvalue())
+        zipf.writestr("resume.pdf", pdf_buffer.getvalue())
 
     zip_buffer.seek(0)
 
-    return send_file(zip_buffer, mimetype='application/zip', as_attachment=True, download_name='resume.zip')
+    return send_file(
+        zip_buffer,
+        mimetype="application/zip",
+        as_attachment=True,
+        download_name="resume.zip",
+    )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run()

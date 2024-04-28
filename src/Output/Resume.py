@@ -162,7 +162,7 @@ class Education:
             degree = get_or_empty(item, 'degree')
             location = get_or_empty(item, 'location')
             grad_dates = get_or_empty(item, 'grad_dates')
-            output += self.formatter.entryListItem(school, location, degree, grad_dates)
+            output += self.formatter.entryListItem(school, grad_dates, degree, location)
             if 'description' in item:
                 output += self.formatter.entryListDescription(item['description'])
 
