@@ -9,6 +9,12 @@ class WordParser():
         self.doc = Document(self.docx_bytes)
         return
     
+    def ensure_https(self, url):
+        # regex checks if URL starts with http:// or https://
+        if not re.match(r'^https?:\/\/', url):
+            url = 'https://' + url
+            return url
+        
     def parse(self):
         text = ""
         hyperlinks = []
@@ -18,7 +24,8 @@ class WordParser():
         rels = self.doc.part.rels
         for rel in rels:
             if rels[rel].reltype == RELATIONSHIP_TYPE.HYPERLINK:
-                hyperlinks.append(rels[rel]._target)
+                corrected_url = self.ensure_https(rels[rel]._target)
+                hyperlinks.append(corrected_url)
 
         return text + "\n".join(hyperlinks)
 
