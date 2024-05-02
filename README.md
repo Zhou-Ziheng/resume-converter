@@ -105,6 +105,8 @@ Example `style` JSON object with all fields:
 
 Contributions to ATSify are welcome! If you encounter any bugs, have feature requests, or would like to contribute code, please open an issue or submit a pull request on the [GitHub repository](https://github.com/Zhou-Ziheng/resume-converter).
 
+If you're interested in contributing to the frontend, you can find the repository for the frontend application [here](https://github.com/Zhou-Ziheng/resume-converter-ui).
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
