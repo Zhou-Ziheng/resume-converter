@@ -65,6 +65,14 @@ def convert_resume():
     tex_buffer = io.BytesIO(tex)
     pdf_buffer = io.BytesIO(pdf)
 
+    if request.form.get("getPDF") == "true":
+        return send_file(
+            pdf_buffer,
+            mimetype="application/pdf",
+            as_attachment=True,
+            download_name="resume.pdf",
+        )
+
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zipf:
         # Add the .tex file to the zip archive
