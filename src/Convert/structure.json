@@ -36,9 +36,17 @@
       "dates": ""
     }
   ],
+  "projects": [
+    {
+      "name": "this is for things like a website or app that someone built",
+      "tools": ["detect languages/framworks found in skills section"],
+      "dates": "",
+      "description": ["return an array"]
+    }
+  ],
   "activities": [
     {
-      "title": "",
+      "title": "this is for tasks like volunteering or clubs or speeches, don't confuse with projects",
       "dates": "Month Year - (Month Year/Present)",
       "city": "",
       "organization": "organization/company",
@@ -49,13 +57,5 @@
     "languages": [],
     "frameworks": [],
     "tools": []
-  },
-  "projects": [
-    {
-      "name": "",
-      "tools": ["detect languages/framworks found in skills section"],
-      "dates": "",
-      "description": ["return an array"]
-    }
-  ]
+  }
 }
