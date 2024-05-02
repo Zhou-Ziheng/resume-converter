@@ -14,6 +14,7 @@ class WordParser():
         if not re.match(r'^https?:\/\/', url):
             url = 'https://' + url
             return url
+        return url
         
     def parse(self):
         text = ""
