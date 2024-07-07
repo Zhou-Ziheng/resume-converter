@@ -124,7 +124,7 @@ def compile_latex():
             pdf_buffer,
             mimetype=mimetype,
             as_attachment=True,
-            attachment_filename="sample.pdf",
+            download_name="sample.pdf",
         )
     except Exception as e:
         return jsonify({"error": f"Compilation failed: {str(e)}"}), 500
