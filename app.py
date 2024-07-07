@@ -3,8 +3,8 @@ import logging
 import os
 import sys
 import zipfile
-from flask import Flask, request, send_file
-from src.convert import convert_resume_handler
+from flask import Flask, request, send_file, jsonify
+from src.convert import convert_resume_handler, compile_tex
 from flask_cors import CORS
 import ddtrace
 
@@ -88,6 +88,46 @@ def convert_resume():
         as_attachment=True,
         download_name="resume.zip",
     )
+
+
+def verify_api_key(api_key):
+    # Retrieve the valid API key from environment variable
+    valid_api_key = os.getenv("PDFLATEX_API_KEY")
+
+    # Check if the provided API key matches the valid API key
+    return api_key == valid_api_key if valid_api_key else False
+
+
+@app.route("/v1/compile", methods=["POST"])
+@ddtrace.tracer.wrap()
+def compile_latex():
+    # Step 1: Verify API Key
+    if not verify_api_key(request.headers.get("API-Key")):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    # Step 2: Extract LaTeX string from request body
+    try:
+        latex_string = request.data.decode("utf-8")
+    except Exception as e:
+        return jsonify({"error": "Invalid request data"}), 400
+
+    if not latex_string:
+        return jsonify({"error": "No LaTeX string provided"}), 400
+
+    # Step 3: Call compile_tex function
+    try:
+        pdf = compile_tex(latex_string)
+        pdf_buffer = io.BytesIO(pdf)
+        mimetype = "application/pdf"
+
+        return send_file(
+            pdf_buffer,
+            mimetype=mimetype,
+            as_attachment=True,
+            attachment_filename="sample.pdf",
+        )
+    except Exception as e:
+        return jsonify({"error": f"Compilation failed: {str(e)}"}), 500
 
 
 if __name__ == "__main__":

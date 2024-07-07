@@ -13,3 +13,4 @@ output.txt
 *.toc
 output.json
 output.tex
+.dev.env
