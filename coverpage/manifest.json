@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Cover Letter Writer",
+    "description": "This extension will help write a cover letter after scraping the job description",
+    "version": "0.0.1",
+    "author": "Meow + Toni",
+
+    "background": {
+        "service_worker": "popup.j"
+    },
+
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
