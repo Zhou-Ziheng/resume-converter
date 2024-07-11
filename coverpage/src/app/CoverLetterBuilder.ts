@@ -41,13 +41,12 @@ export class CoverLetterBuilder {
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
 \\input{glyphtounicode}
-\\usepackage[default]{carlito}
 \\usepackage{ulem}
 \\usepackage[hidelinks]{hyperref}
 \\usepackage{xcolor,soul,lipsum}
 \\newcommand{\\myul}[2][black]{\\setulcolor{##1}\\ul{##2}\\setulcolor{black}}
 \\usepackage[T1]{fontenc}
-\\definecolor{darkblue}{RGB}{0,0,0}
+\\definecolor{darkblue}{RGB}{0,0,238}
 \\hypersetup{colorlinks,breaklinks,linkcolor=darkblue,urlcolor=darkblue,anchorcolor=darkblue,citecolor=darkblue}
 \\usepackage{setspace} % Add this package for line spacing control
 \\setstretch{1.2} % Set line spacing to double
