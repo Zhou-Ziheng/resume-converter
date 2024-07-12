@@ -60,7 +60,7 @@ export class CoverLetterBuilder {
 \\newcommand{\\greeting}{To whom it may concern,} % The greeting to use (e.g. "Dear")
 \\newcommand{\\myname}{${this.user.name}} % Your name
 \\newcommand{\\position}{${this.job.role}} % The position you are applying for
-\\newcommand{\\closer}{Kind Regards} % The closer to use (e.g. "Kind Regards")
+\\newcommand{\\closer}{Best regards} % The closer to use (e.g. "Kind regards")
 % Company information
 \\newcommand{\\company}{${this.job.companyName}} % The company you are applying to
 
