@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
 
-  "name": "Atsify",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
-  "version": "0.0.1",
+  "name": "Atsify Cover Letter Writer",
+  "description": "Simplify writing cover letters effortlessly with a single click.",
+  "version": "1.0.0",
+  "authors": "Ziheng Zhou, Zhi Rong Cai",
 
   "options_ui": {
     "page": "options.html"
