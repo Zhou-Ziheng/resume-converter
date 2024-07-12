@@ -31,10 +31,14 @@ const App = () => {
                         action: "extract_data",
                     },
                     (msg) => {
-                        console.log(msg)
-                        const { position, company } = msg;
-                        setRole(position);
-                        setCompanyName(company);
+                        try {
+                            const { position, company } = msg;
+                            setRole(position);
+                            setCompanyName(company);
+                            chrome.storage.local.set({ "company-name": company, "position": position });
+                        } catch (e) {
+                            console.log("invalid site layout", msg)
+                        }
                     }
                 );
             }

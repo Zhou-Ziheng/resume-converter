@@ -16,7 +16,7 @@
 
   "content_scripts": [
       {
-          "matches": ["http://*/*", "https://*/*"],
+          "matches": ["https://boards.greenhouse.io/*/*", "https://waterlooworks.uwaterloo.ca/*/*"],
           "js": ["js/vendor.js", "js/content_script.js"]
       }
   ],

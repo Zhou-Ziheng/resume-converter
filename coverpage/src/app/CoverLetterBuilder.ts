@@ -91,16 +91,16 @@ ${this.application.bullets.map(bullet => `\\item ${bullet}`).join('\n')}
 \\end{itemize}
 \\vspace{0.15in}
 
-Thank you for considering my application. I am enthusiastic about the possibility of joining \\company{} and contributing to its mission. I look forward to the opportunity to discuss how my skills and experiences align with the needs of your team.
+Thank you for considering my application. I am enthusiastic about the possibility of joining \\company{} and contributing to its mission. I look forward to the opportunity to discuss how my skills and experiences align with the needs of your team. \\\\
+
+\\setlength{\\parindent}{0pt}
+
 % Closer
-\\vspace{0.1in}
 % \\vfill
 
-\\begin{flushright}
 \\closer,
 
 \\myname
-\\end{flushright}
 
 \\end{document}
         `;
