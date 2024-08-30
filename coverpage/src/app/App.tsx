@@ -64,7 +64,21 @@ const App = () => {
 
         const blob = await response.blob();
         const pdfUrl = URL.createObjectURL(blob);
-        window.open(pdfUrl);
+
+        const date = new Date();
+
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        const formattedDate = `${month}-${day}-${year}`;
+        console.log(`${companyName}_${formattedDate}.pdf`)
+        chrome.downloads.download({
+            url: pdfUrl,
+            filename: `${companyName}_${formattedDate}.pdf`,
+            saveAs: true
+        }, () => {
+            URL.revokeObjectURL(url);
+        });
     }
 
     const generate = async () => {
@@ -88,7 +102,6 @@ const App = () => {
 
         const coverLetterBuilder = new CoverLetterBuilder(user, job, application);
         const latex = coverLetterBuilder.generateLaTeX();
-        console.log(latex);
 
         await compileResume(latex)
 
@@ -101,7 +114,6 @@ const App = () => {
 
     useEffect(() => {
         chrome.storage.local.get("bullets", (result) => {
-            console.log(result.bullets);
             setBullets(result.bullets);
         });
     }, [])
