@@ -1,33 +1,33 @@
 interface User {
-    name: string;
-    email: string;
-    phone: string;
-    github: string;
-    linkedin: string;
+  name: string;
+  email: string;
+  phone: string;
+  github: string;
+  linkedin: string;
 }
 
 interface Job {
-    companyName: string;
-    role: string;
+  companyName: string;
+  role: string;
 }
 
 interface Application {
-    bullets: string[];
+  bullets: string[];
 }
 
 export class CoverLetterBuilder {
-    user: User;
-    job: Job;
-    application: Application;
+  user: User;
+  job: Job;
+  application: Application;
 
-    constructor(user: User, job: Job, application: Application) {
-        this.user = user;
-        this.job = job;
-        this.application = application;
-    }
+  constructor(user: User, job: Job, application: Application) {
+    this.user = user;
+    this.job = job;
+    this.application = application;
+  }
 
-    generateLaTeX(): string {
-        return `
+  generateLaTeX(): string {
+    return `
 \\documentclass[letterpaper,12pt]{article}
 \\usepackage{latexsym}
 \\usepackage[empty]{fullpage}
@@ -62,14 +62,20 @@ export class CoverLetterBuilder {
 \\newcommand{\\position}{${this.job.role}} % The position you are applying for
 \\newcommand{\\closer}{Best regards} % The closer to use (e.g. "Kind regards")
 % Company information
-\\newcommand{\\company}{${this.job.companyName}} % The company you are applying to
+\\newcommand{\\company}{${
+      this.job.companyName
+    }} % The company you are applying to
 
 \\begin{document}
 
 \\begin{center}
     \\textbf{\\Huge ${this.user.name}} \\\\ \\vspace{5pt} 
-    \\small  ${this.user.phone} $|$ \\href{mailto:${this.user.email}}{ ${this.user.email}}  $|$
-    \\href{https://${this.user.github}}{${this.user.github}} $|$ \\href{https://${this.user.linkedin}}{${this.user.linkedin}}
+    \\small  ${this.user.phone} $|$ \\href{mailto:${this.user.email}}{ ${
+      this.user.email
+    }}  $|$
+    \\href{https://${this.user.github}}{${
+      this.user.github
+    }} $|$ \\href{https://${this.user.linkedin}}{${this.user.linkedin}}
 \\end{center} 
 
 \\vspace{-12.5pt}
@@ -87,7 +93,10 @@ export class CoverLetterBuilder {
 \\vspace{-0.1in}\\setlength\\parindent{24pt}
 I am writing to express my interest in the \\position{} position at \\company. With a background in full-stack web development, I am confident in my ability to contribute effectively to your team. The following is a list of skills that I possess relevant to your job posting:
 \\begin{itemize}[itemsep=0pt]
-${this.application.bullets.map(bullet => `\\item ${bullet}`).join('\n')}
+${this.application.bullets
+  .filter((str) => str != "")
+  .map((bullet) => `\\item ${bullet}`)
+  .join("\n")}
 \\end{itemize}
 \\vspace{0.15in}
 
@@ -104,5 +113,5 @@ Thank you for considering my application. I am enthusiastic about the possibilit
 
 \\end{document}
         `;
-    }
+  }
 }
