@@ -5,11 +5,6 @@
   "description": "Simplify writing cover letters effortlessly with a single click.",
   "version": "1.0.0",
   "author": "Ziheng Zhou, Zhi Rong Cai",
-
-  "options_ui": {
-    "page": "options.html"
-  },
-
   "action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
@@ -24,10 +19,6 @@
       "js": ["js/vendor.js", "js/content_script.js"]
     }
   ],
-
-  "background": {
-    "service_worker": "js/background.js"
-  },
 
   "permissions": ["storage", "tabs", "downloads"],
 
