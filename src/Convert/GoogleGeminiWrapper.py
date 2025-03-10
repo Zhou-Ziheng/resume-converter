@@ -41,7 +41,7 @@ class GoogleGenimiWrapper:
                     logging.warning("Retrying...")
                     time.sleep(5)  # Wait before retrying
             except json.JSONDecodeError as e:
-                logging.error(f"Error decoding JSON: {e} {data}")
+                logging.error(f"Error decoding JSON: {e} \n {data}")
                 if attempt < retries - 1:
                     logging.warning("Retrying...")
                     time.sleep(10)
@@ -52,7 +52,8 @@ class GoogleGenimiWrapper:
     def format_text(self, text):
         key = os.environ.get("GEMINI_API_KEY")
         data = {
-            "contents": [{"parts": [{"text": self.prompt + self.structure + text}]}]
+            "contents": [{"parts": [{"text": self.prompt + self.structure + text}]}],
+            "generationConfig": {"response_mime_type": "application/json"},
         }
 
         headers = {"Content-Type": "application/json"}
