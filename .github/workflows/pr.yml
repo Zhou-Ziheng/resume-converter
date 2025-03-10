@@ -16,33 +16,5 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Log in to Docker Hub
-        if: github.event_name == 'push' # Only login on push, not PR
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_SHA}" >> $GITHUB_ENV
-
       - name: Build images
         run: docker compose build
-
-      - name: Tag images
-        run: |
-          docker tag resume-converter_backend sparkyfnay/resume-converter:${{ env.RELEASE_VERSION }}
-          docker tag resume-converter_backend sparkyfnay/resume-converter:latest
-
-      - name: Push container
-        if: github.event_name == 'push' # Only push on push, not PR
-        run: docker push --all-tags sparkyfnay/resume-converter
-
-      - name: Execute remote SSH commands using password
-        if: github.event_name == 'push' # Only deploy on push, not PR
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: echo ${{ env.RELEASE_VERSION }} | . ./deploy.sh
