@@ -9,12 +9,19 @@ on:
       - main # Exclude PRs targeting main
 
 jobs:
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+  docker:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Build images
-        run: docker compose build
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build the Docker image
+        uses: docker/build-push-action@v6
+        with:
+          push: false # Do not push the image
+          tags: user/app:latest # You can adjust this tag as needed
+          cache-from: type=registry,ref=user/app:latest # Adjust this if necessary
+          cache-to: type=inline
